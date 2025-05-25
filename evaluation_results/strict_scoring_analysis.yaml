@@ -1,0 +1,296 @@
+evaluation_metadata:
+  target_document: "proposals/sample_proposal.md"
+  evaluation_date: "2025-05-25"
+  evaluation_type: "strict_comparative"
+  evaluator: "AI_TDD_System"
+  assumed_baseline: "50_point_level"
+  total_possible_points: 100
+
+gate_tests:
+  gate_01_applicant_eligibility:
+    result: "PASS"
+    details:
+      applicant_qualification: true  # 一般社団法人として適格
+      regional_cooperation: true     # 美濃市等との連携明記
+      consent_acquisition: true      # 地方公共団体が連携パートナー
+    
+  gate_02_project_requirements:
+    result: "PASS"
+    details:
+      basic_requirements: true       # 地域連携コンテンツ造成
+      sales_requirements: true       # R7年11月販売開始明記
+      deliverable_requirements: true # OTA掲載・SNS計画あり
+
+scoring_tests:
+  sustainability:
+    stakeholder_engagement:
+      test_id: "SUST-01"
+      max_points: 10
+      awarded_points: 7
+      level_achieved: 2  # 効果的な連携
+      evaluation: "C+"
+      
+      strengths:
+        - "5者以上の多様な関係者参画"
+        - "具体的な役割分担の明記"
+        - "業界横断的な連携体制"
+      
+      weaknesses:
+        - "住民参画プロセスが不明確"
+        - "長期協定の明記なし"
+        - "主要ステークホルダー（商工会等）不在"
+      
+      comparative_analysis:
+        superior_examples:
+          - "他案では住民説明会・パブリックコメント実施"
+          - "3年以上の協定書締結が一般的"
+          - "金融機関・商工会等の巻き込みが標準"
+    
+    economic_impact:
+      test_id: "SUST-02"
+      max_points: 15
+      awarded_points: 5
+      evaluation: "D"
+      
+      mandatory_requirements:
+        domestic_procurement_rate:
+          stated_value: "75%"
+          evidence_provided: false
+          calculation_basis: false
+          score: 0
+        
+        economic_ripple_effect:
+          direct_effect_only: true
+          indirect_effect_analysis: false
+          multiplier_analysis: false
+          score: 0
+      
+      additional_elements:
+        employment_creation:
+          details_provided: true
+          score: 2
+        secondary_effects:
+          basic_calculation: true
+          score: 2
+        other_elements:
+          score: 1
+      
+      critical_issues:
+        - "域内調達率75%の算出根拠が皆無"
+        - "産業連関表による波及効果分析なし"
+        - "売上＝直接効果という誤認識"
+      
+      comparative_analysis:
+        superior_examples:
+          - "上位案では大学連携による詳細経済分析"
+          - "産業連関表を使用した3段階効果分析"
+          - "調達先企業との事前協議記録"
+
+  uniqueness_innovation:
+    local_uniqueness:
+      max_points: 10
+      awarded_points: 6
+      evaluation: "C+"
+      
+      strengths:
+        - "美濃和紙1300年の歴史活用"
+        - "実際の職人による技術指導"
+      
+      weaknesses:
+        - "美濃和紙の独自性説明不足"
+        - "地域住民の暮らしとの接点薄い"
+      
+      comparative_analysis:
+        - "他地域では地域独自性をより具体的に差別化"
+        - "住民の日常との深い関わりを設計"
+    
+    differentiation:
+      max_points: 10
+      awarded_points: 5
+      evaluation: "C"
+      
+      critical_issues:
+        - "和紙×アートは全国各地で実施済み"
+        - "競合分析が表面的"
+        - "具体的他地域事例との比較なし"
+      
+      comparative_analysis:
+        - "優秀企画では唯一無二の要素を明確化"
+        - "詳細な競合分析と差別化戦略"
+
+  specificity_planning:
+    goal_specificity:
+      max_points: 5
+      awarded_points: 4
+      evaluation: "B"
+      strengths:
+        - "年間2,400名等明確なKPI"
+        - "具体的スケジュール"
+    
+    budget_planning:
+      max_points: 5
+      awarded_points: 3
+      evaluation: "C+"
+      weaknesses:
+        - "積算根拠不明確"
+        - "複数見積もりなし"
+    
+    content_specificity:
+      max_points: 5
+      awarded_points: 3
+      evaluation: "C+"
+      weaknesses:
+        - "アート創作の具体的内容不明"
+        - "運営オペレーション詳細不足"
+    
+    sales_planning:
+      max_points: 5
+      awarded_points: 3
+      evaluation: "C+"
+      weaknesses:
+        - "販売チャネルの具体性不足"
+
+  implementation_sustainability:
+    implementation_structure:
+      max_points: 10
+      awarded_points: 4
+      evaluation: "D+"
+      
+      critical_issues:
+        - "メンバーのスキル・経験詳細不明"
+        - "意思決定プロセス不明確"
+        - "リスク対応策が薄い"
+      
+      comparative_analysis:
+        - "優秀企画では履歴書レベルの詳細情報"
+        - "類似事業実績を数値で明示"
+    
+    sales_entity:
+      max_points: 10
+      awarded_points: 3
+      evaluation: "D"
+      
+      concerns:
+        - "年間8,000名取扱は小規模"
+        - "販売チャネル確保済みの根拠なし"
+        - "具体的OTA名・代理店名なし"
+      
+      comparative_analysis:
+        - "優秀企画では主要OTAとの事前交渉記録"
+        - "有力代理店との契約書案"
+
+  profitability:
+    pricing_strategy:
+      max_points: 5
+      awarded_points: 2
+      evaluation: "D"
+      
+      critical_issues:
+        - "市場調査対象・サンプル数不明"
+        - "競合分析で具体的施設名なし"
+        - "WTPアンケート詳細なし"
+    
+    cost_management:
+      max_points: 5
+      awarded_points: 2
+      evaluation: "D"
+      
+      issues:
+        - "変動費8,000円の内訳不明"
+        - "コスト最適化策なし"
+    
+    sales_channels:
+      max_points: 5
+      awarded_points: 1
+      evaluation: "D-"
+      
+      critical_issues:
+        - "販路確保の具体的根拠なし"
+    
+    sustainability:
+      max_points: 5
+      awarded_points: 0
+      evaluation: "F"
+      
+      critical_issues:
+        - "投資回収期間1.1年は非現実的"
+        - "減価償却・税金・リスク考慮なし"
+        - "補助金依存からの脱却戦略なし"
+      
+      comparative_analysis:
+        - "一般的には3-5年の回収期間"
+        - "優秀企画では3年間の詳細P/L・B/S・C/F"
+
+  market_in_approach:
+    customer_research:
+      max_points: 5
+      awarded_points: 2
+      evaluation: "D"
+      
+      issues:
+        - "調査手法不明"
+        - "ペルソナが表面的"
+        - "行動分析なし"
+    
+    experience_design:
+      max_points: 10
+      awarded_points: 4
+      evaluation: "D+"
+      
+      issues:
+        - "カスタマージャーニーマップなし"
+        - "感情的変化プロセス未設計"
+    
+    authentic_experience:
+      max_points: 5
+      awarded_points: 2
+      evaluation: "D"
+      
+      issues:
+        - "体験の深さに疑問"
+
+overall_assessment:
+  total_score: 48
+  max_possible: 100
+  percentage: 48
+  grade: "C"
+  ranking: "平均以下"
+  
+  strengths:
+    - "基本的な枠組みは整備"
+    - "Gate testは全てクリア"
+    - "定量目標の設定は良好"
+  
+  critical_weaknesses:
+    - "経済効果分析の致命的不足"
+    - "収益性分析の甘さ"
+    - "実施体制の具体性不足"
+    - "販路確保の曖昧さ"
+    - "顧客調査の表面性"
+  
+  comparative_ranking:
+    industry_position: "下位25%程度"
+    reason: "分析の深さ、計画の具体性で大きく劣る"
+  
+  improvement_priority:
+    urgent:
+      - "経済効果分析の抜本的見直し"
+      - "財務計画の保守的再計算"
+      - "実施体制の詳細化"
+    
+    important:
+      - "販路確保の具体的根拠収集"
+      - "顧客調査の大幅拡充"
+      - "競合分析の詳細化"
+
+evaluator_comments:
+  overall: "企画の骨格はあるが、実現可能性と持続性に大きな疑問がある典型的な平均以下案件"
+  
+  specific_concerns:
+    - "補助金ありきの楽観的計画"
+    - "他案比較で調査・分析の精度が大きく劣る"
+    - "現状のままでは採択困難"
+  
+  required_actions:
+    - "抜本的な計画見直しが必要"
+    - "優秀企画レベルまでの詳細化・具体化が急務"
