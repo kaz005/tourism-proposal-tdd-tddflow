@@ -1,0 +1,99 @@
+system: |
+  You are a bilingual (JA/EN) tourism–grant proposal evaluator.
+  Return your answer in valid JSON ONLY, no prose.
+  Think step-by-step **silently**; reveal only the JSON result.
+
+sustainability:
+  user: |
+    対象カテゴリ: «持続可能性»
+    採点基準:
+    1. 財務的継続性　― 補助終了後 3 年以内に黒字化できる根拠が具体か
+    2. 組織・ガバナンス　― 運営体制・KPI 監視・定期レビューが明示されているか
+    3. リスク対応　　　― 主要リスクと代替策が網羅されているか
+    制約:
+    - 0–10 点の整数 `score`
+    - 2〜4行の `strengths`
+    - 2〜4行の `improvements`
+    【抜粋開始】
+    {EXCERPT}
+    【抜粋終了】
+    上記抜粋を評価し、以下形式で返答せよ：
+    {
+      "score": <int>,
+      "strengths": ["…", "…"],
+      "improvements": ["…", "…"]
+    }
+
+uniqueness:
+  extract: |
+    以下は観光企画書の全文です。
+    {fulltext}
+
+    「独自性」や「他地域との差別化」に関する記述だけを抜き出し、日本語の段落ごとに箇条書きで返してください。
+  evaluate: |
+    以下は独自性に関する記述抜粋です。
+    {excerpt}
+
+    1) 他地域と比べた際の独自価値
+    2) 差別化要素や新規性
+
+    上記2点について、合計10点満点で採点し、点数内訳と改善提案を日本語で教えてください。
+
+feasibility:
+  extract: |
+    以下は観光企画書の全文です。
+    {fulltext}
+
+    「計画性」や「実現可能性」に関する記述だけを抜き出し、日本語の段落ごとに箇条書きで返してください。
+  evaluate: |
+    以下は計画性に関する記述抜粋です。
+    {excerpt}
+
+    1) 実現可能性（スケジュール・体制・リスク管理）
+    2) 具体的な実施計画の明確さ
+
+    上記2点について、合計10点満点で採点し、点数内訳と改善提案を日本語で教えてください。
+
+organization:
+  user: |
+    対象カテゴリ: «組織体制»
+    採点基準:
+    1. 役割分担の明確さ　― 組織図・責任範囲が具体か
+    2. 人員・スキル適合　― 必要な専門人材が配置されているか
+    3. ガバナンスプロセス ― 意思決定・品質管理フローが示されているか
+    制約:
+    - 0–10 点の整数 `score`
+    - 2〜4行の `strengths`
+    - 2〜4行の `improvements`
+    【抜粋開始】
+    {EXCERPT}
+    【抜粋終了】
+    上記抜粋を評価し、以下形式で返答せよ：
+    {
+      "score": <int>,
+      "strengths": ["…", "…"],
+      "improvements": ["…", "…"]
+    }
+
+profitability:
+  user: |
+    対象カテゴリ: «収益性»
+    採点基準:
+    1. 価格戦略の妥当性　― 市場価格・原価を踏まえた設定か
+    2. 複数収益源　　　　― 物販・サブスク等、複線化が示されているか
+    3. 補助金依存度低減　― 補助終了後も黒字維持の計画があるか
+    制約:
+    - 0–10 点の整数 `score`
+    - 2〜4行の `strengths`
+    - 2〜4行の `improvements`
+    【抜粋開始】
+    {EXCERPT}
+    【抜粋終了】
+    上記抜粋を評価し、以下形式で返答せよ：
+    {
+      "score": <int>,
+      "strengths": ["…", "…"],
+      "improvements": ["…", "…"]
+    }
+
+# 今後、uniqueness, feasibility, organization, profitability なども同様に追加可能 

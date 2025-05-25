@@ -1,0 +1,85 @@
+test_id: SUST-01
+category: 持続可能な観光地域づくりへの寄与
+subcategory: 地域関係者の巻き込み度
+weight: 10
+type: scoring
+
+levels:
+  - level: 1
+    name: 最低限の連携
+    points: 3
+    criteria:
+      - id: SUST-01-1
+        description: 地域の3者以上の関係者が参画している
+        evidence_required: 参画者リスト（組織名、担当者名、連絡先）
+        check_points:
+          - 異なる分野の組織が含まれているか
+          - 各組織の代表者または権限者が明記されているか
+      
+      - id: SUST-01-2
+        description: 各関係者の役割が明記されている
+        evidence_required: 役割分担表
+        check_points:
+          - 具体的な業務内容が記載されているか
+          - 責任範囲が明確か
+
+  - level: 2
+    name: 効果的な連携
+    points: 7
+    criteria:
+      - id: SUST-01-3
+        description: 5者以上の多様な関係者が参画
+        evidence_required: 参画者リストと各組織の属性説明
+        check_points:
+          - 行政、DMO、観光協会、民間企業、地域団体等の多様性
+          - 各分野から複数の組織が参加しているか
+      
+      - id: SUST-01-4
+        description: 各関係者の具体的な役割分担と責任範囲が明確
+        evidence_required: 詳細な体制図と役割定義書
+        check_points:
+          - 意思決定プロセスが明確か
+          - 各組織間の連携方法が具体的か
+      
+      - id: SUST-01-5
+        description: 定期的な協議体制（月1回以上）が構築されている
+        evidence_required: 会議スケジュールと議事録サンプル
+        check_points:
+          - 定例会議の日程が設定されているか
+          - オンライン/オフラインの使い分けが計画されているか
+
+  - level: 3
+    name: 地域一体となった取組
+    points: 10
+    criteria:
+      - id: SUST-01-6
+        description: 地域の主要ステークホルダーを網羅的に巻き込んでいる
+        evidence_required: ステークホルダーマップと参画根拠
+        check_points:
+          - 地域の産業構造を反映した参画者構成か
+          - キーパーソンが特定され参画しているか
+      
+      - id: SUST-01-7
+        description: 地域住民の参画や合意形成のプロセスが明確
+        evidence_required: 住民説明会記録、アンケート結果等
+        check_points:
+          - 住民への情報共有方法が確立されているか
+          - フィードバックを反映する仕組みがあるか
+      
+      - id: SUST-01-8
+        description: 長期的な連携協定や覚書等が締結されている
+        evidence_required: 協定書・覚書の写し
+        check_points:
+          - 3年以上の協定期間が設定されているか
+          - 各者の責任と義務が明文化されているか
+
+validation_rules:
+  - 参画者の重複カウントは不可
+  - 同一法人の複数部署は1者としてカウント
+  - 役割の具体性には定量的な目標を含むことが望ましい
+  - エビデンスは申請時点で準備済みまたは確実に取得可能なもの
+
+evaluation_notes: |
+  このテスト項目では、単なる参加者数ではなく、実質的な連携の深さと
+  持続可能性を評価します。形式的な参画ではなく、各組織が主体的に
+  関わり、相互補完的な関係を構築していることが重要です。

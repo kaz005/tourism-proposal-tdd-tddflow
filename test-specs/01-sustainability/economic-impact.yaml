@@ -1,0 +1,87 @@
+test_id: SUST-02
+category: 持続可能な観光地域づくりへの寄与
+subcategory: 地域経済効果の具体性
+weight: 15
+type: scoring
+
+mandatory_requirements:
+  points: 5
+  criteria:
+    - id: SUST-02-1
+      description: 域内調達率が数値で明示されている
+      evidence_required: 調達計画書と算出根拠
+      minimum_standard: 30%以上の域内調達率
+      check_points:
+        - 調達品目・サービスのリストが作成されているか
+        - 各品目の調達先（域内/域外）が明確か
+        - 算出方法が妥当か
+
+    - id: SUST-02-2
+      description: 地域への経済波及効果が定量的に試算されている
+      evidence_required: 経済効果試算書
+      minimum_standard: 事業費の1.5倍以上の経済波及効果
+      check_points:
+        - 直接効果、間接効果、誘発効果の区分があるか
+        - 産業連関表等の根拠に基づいているか
+        - 試算の前提条件が明記されているか
+
+additional_points:
+  max_points: 10
+  point_per_item: 2
+  criteria:
+    - id: SUST-02-3
+      description: 域内調達率70%以上の具体的な調達計画
+      evidence_required: 詳細調達計画と地元企業リスト
+      check_points:
+        - 地元企業との事前協議記録があるか
+        - 品質・価格の妥当性が検証されているか
+        - 代替調達先も検討されているか
+
+    - id: SUST-02-4
+      description: 地域事業者への発注金額・割合が明確
+      evidence_required: 発注計画書（金額・比率明記）
+      check_points:
+        - 事業者別の発注予定額が明記されているか
+        - 全体予算に占める割合が算出されているか
+        - 支払条件が地域事業者に配慮されているか
+
+    - id: SUST-02-5
+      description: 雇用創出効果（人数・賃金）が具体的
+      evidence_required: 雇用計画書と賃金テーブル
+      check_points:
+        - 正規/非正規別の雇用人数が明記されているか
+        - 地域の平均賃金との比較があるか
+        - 3年間の雇用継続計画があるか
+
+    - id: SUST-02-6
+      description: 二次的経済効果（宿泊、飲食等）の試算
+      evidence_required: 関連産業への波及効果分析
+      check_points:
+        - 来訪者の消費行動分析があるか
+        - 宿泊施設、飲食店等への影響試算があるか
+        - 交通機関等への波及効果も含まれているか
+
+    - id: SUST-02-7
+      description: 経済効果の算出根拠が妥当で検証可能
+      evidence_required: 算出根拠資料と参考データ
+      check_points:
+        - 統計データの出典が明記されているか
+        - 類似事例との比較検証があるか
+        - 第三者による検証が可能な内容か
+
+scoring_method: |
+  1. 必須要件（SUST-02-1, SUST-02-2）を両方満たす → 5点
+  2. 追加要素（SUST-02-3〜SUST-02-7）各2点、最大10点
+  3. 合計最大15点
+
+best_practices:
+  - 地元商工会議所等との連携による調達先リストの作成
+  - 大学等研究機関との連携による経済効果分析
+  - 地域金融機関との協力による資金循環の可視化
+  - 定期的なモニタリング体制の構築
+
+common_mistakes:
+  - 域内調達率の計算に人件費を含めない
+  - 経済波及効果を過大に見積もる
+  - 一時的な効果のみで持続性を考慮しない
+  - エビデンスとなる協定書等の準備不足
