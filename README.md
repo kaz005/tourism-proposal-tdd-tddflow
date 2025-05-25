@@ -403,3 +403,51 @@ python -m src.core.render_report
 - `src/core/render_report.py` … JSON結果をMarkdownレポートに変換
 
 今後、カテゴリ追加やNotion/Excel連携も順次拡張予定です。
+
+## 📊 Tourism-Proposal Evaluation Flow
+
+本プロジェクトでは **GitHub Issue × Claude Code Action** を使い、  
+提出された観光企画案を自動でテスト・スコアリングします。CI/CD ランナーは不要です。
+
+### 🔁 評価の流れ
+
+1. **提案ファイルを追加**  
+   - `proposals/<任意のフォルダ>/proposal.md`  
+   - 根拠資料は `proposals/<同フォルダ>/evidence/` 配下に置く  
+     - 例：`appendix/local_orders.xlsx` / `market_report.pdf` など
+
+2. **Issue を発行して @claude をメンション**  
+   ```md
+   @claude  
+   Evaluate proposal: proposals/2025-05-ishigaki-tour
+   ```
+   ※ファイルパスまたはコミット SHA を明記してください。
+
+3. Claude Code Action が自動実行
+   1. test-specs/**/*.yaml を読み込み
+   2. Absolute テスト→ NG があれば即失格
+   3. Relative テスト→ 合格案件同士をスコアリング
+   4. Issue コメントに結果を返信
+      • 各テストの通過 / 不通過
+      • 相対スコア（0-100）と順位
+
+🗂 ディレクトリ構成（抜粋）
+
+test-specs/            # YAML テスト定義（absolute / relative）
+  sustainability.yaml
+  uniqueness.yaml
+  ...
+proposals/
+  2025-05-ishigaki-tour/
+    proposal.md
+    evidence/
+      local_orders.xlsx
+      market_report.pdf
+
+⚙️ テスト種別
+
+evaluation_type	判定方法	目的
+absolute	閾値クリアで Pass / Fail	要件違反の即時排除
+relative	合格案件間でスコア化	オリジナリティ等、相対評価が必要な軸
+
+仕様詳細は test-specs/README.md を参照。

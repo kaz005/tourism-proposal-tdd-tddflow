@@ -1,0 +1,26 @@
+name: "📑 Evaluate proposal"
+description: "提出した企画案をテスト＆スコアリングします"
+title: "Evaluate: <branch-or-path>"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **⚠️ 手順**
+        1. プロポーザルと根拠資料を `proposals/<your-folder>` に配置し、push してください  
+        2. 下欄に "@claude" と評価対象パス（または SHA）を入力して Issue を送信してください  
+        3. 数十秒〜数分で結果が返信されます
+  - type: textarea
+    id: trigger
+    attributes:
+      label: "@claude コマンド"
+      description: |
+        例）  
+        ```
+        @claude
+        Evaluate proposal: proposals/2025-05-ishigaki-tour
+        ```
+      placeholder: |
+        @claude
+        Evaluate proposal: proposals/<your-folder>
+    validations:
+      required: true 
