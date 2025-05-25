@@ -72,39 +72,32 @@ criteria:
   - id: ORG-01
     name: 運営体制の構築
     description: 役割分担リストから必須ロール（営業・運営・財務）が揃っているか
-    type: text
-    scoring:
-      logic: |
-        if has_sales and has_operation and has_finance:
-          return 10
-        elif (has_sales and has_operation) or (has_sales and has_finance) or (has_operation and has_finance):
-          return 5
-        else:
-          return 0
+    metric: num_required_roles
+    formula: "sum([has_sales, has_operation, has_finance])"
+    threshold: ">= 3"
+    justification:
+      data_source: "appendix/organization_chart.pdf"
+      rationale: "営業・運営・財務の3役が揃っていれば合格"
     must_have: true
 
   - id: ORG-02
     name: 販売予定先の明示
     description: OTA/旅行会社名や自社EC等の販路が明記されているか
-    type: text
-    scoring:
-      logic: |
-        if has_ota or has_travel_agency or has_ec:
-          return 10
-        else:
-          return 0
+    metric: has_sales_channel
+    formula: "has_ota or has_travel_agency or has_ec"
+    threshold: "== True"
+    justification:
+      data_source: "appendix/sales_channels.xlsx"
+      rationale: "いずれかの販路が明記されていれば合格"
     must_have: true
 
   - id: ORG-03
     name: 協定書・営業協力体制の有無
     description: 地域事業者・自治体等との協定書や営業協力体制の明示
-    type: text
-    scoring:
-      logic: |
-        if has_agreement and has_collaboration:
-          return 10
-        elif has_agreement or has_collaboration:
-          return 5
-        else:
-          return 0
+    metric: has_agreement_and_collaboration
+    formula: "has_agreement and has_collaboration"
+    threshold: "== True"
+    justification:
+      data_source: "appendix/agreements.pdf"
+      rationale: "協定書と協力体制の両方があれば合格"
     must_have: true

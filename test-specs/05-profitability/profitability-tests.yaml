@@ -112,50 +112,38 @@ red_flags:
   - 採算度外視の計画
   - 継続性への配慮不足
 
-# 収益性（Profitability）拡張テスト仕様
+# 収益性（Profitability）定量評価仕様
 
 criteria:
   - id: PROF-01
     name: 自立採算性
     description: 補助金終了後3年目のPL提出・営業利益率>5%で合格
-    type: numeric
-    scoring:
-      logic: |
-        if has_pl and op_margin >= 0.05:
-          return 10
-        elif has_pl:
-          return 5
-        else:
-          return 0
+    metric: op_margin_3rd_year
+    formula: "op_profit_3rd_year / sales_3rd_year"
+    threshold: ">= 0.05"
+    justification:
+      data_source: "appendix/pl_3rd_year.xlsx"
+      rationale: "営業利益率5%以上で自立採算性ありと判定"
     must_have: true
 
   - id: PROF-02
     name: 賃金上昇
     description: 従業員人件費総額の前年比増加率
-    type: numeric
-    threshold:
-      full: 0.03   # +3%以上で満点
-      half: 0.01   # +1%以上で半分
-    scoring:
-      logic: |
-        if wage_growth >= 0.03:
-          return 10
-        elif wage_growth >= 0.01:
-          return 5
-        else:
-          return 0
+    metric: wage_growth
+    formula: "(wage_total_this_year - wage_total_last_year) / wage_total_last_year"
+    threshold: ">= 0.03"
+    justification:
+      data_source: "appendix/wage_table.xlsx"
+      rationale: "前年比+3%以上で合格、+1%以上で半分"
     must_have: true
 
   - id: PROF-03
     name: 複数収益源の有無
     description: 物販・サブスク等、複数収益源の明記
-    type: text
-    scoring:
-      logic: |
-        if has_merchandise and has_subscription:
-          return 10
-        elif has_merchandise or has_subscription:
-          return 5
-        else:
-          return 0
+    metric: num_revenue_streams
+    formula: "sum([has_merchandise, has_subscription])"
+    threshold: ">= 2"
+    justification:
+      data_source: "appendix/revenue_streams.xlsx"
+      rationale: "2つ以上の収益源があれば合格"
     must_have: true

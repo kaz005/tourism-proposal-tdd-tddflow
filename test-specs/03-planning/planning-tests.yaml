@@ -116,42 +116,32 @@ criteria:
   - id: PLAN-01
     name: 市場調査・顧客分析
     description: 調査レポート添付の有無＋調査手法（n≧100のアンケート等）
-    type: text+numeric
-    scoring:
-      logic: |
-        if has_report and sample_size >= 100:
-          return 10
-        elif has_report:
-          return 5
-        else:
-          return 0
+    metric: survey_sample_size
+    formula: "sample_size"
+    threshold: ">= 100"
+    justification:
+      data_source: "appendix/market_survey.pdf"
+      rationale: "n=100以上の調査で十分な顧客分析とみなす"
     must_have: true
 
   - id: PLAN-02
     name: 売上予測とターゲット整合性
     description: 客単価×想定客数＝売上の論理整合性
-    type: numeric
-    scoring:
-      logic: |
-        # 標準偏差±20%以内なら満点、±40%以内で半分
-        if deviation <= 0.2:
-          return 10
-        elif deviation <= 0.4:
-          return 5
-        else:
-          return 0
+    metric: sales_deviation
+    formula: "abs((unit_price * expected_customers) - sales_forecast) / sales_forecast"
+    threshold: "<= 0.2"
+    justification:
+      data_source: "appendix/sales_forecast.xlsx"
+      rationale: "売上予測の誤差20%以内で整合性ありと判定"
     must_have: true
 
   - id: PLAN-03
     name: 観光客視点の本物体験施策
     description: 観光客目線での"本物体験"提供施策の具体性
-    type: text
-    scoring:
-      logic: |
-        if has_real_experience and is_concrete:
-          return 10
-        elif has_real_experience:
-          return 5
-        else:
-          return 0
+    metric: real_experience_score
+    formula: "has_real_experience + is_concrete"
+    threshold: ">= 2"
+    justification:
+      data_source: "appendix/experience_evidence.pdf"
+      rationale: "本物体験かつ具体的施策が両方あれば合格"
     must_have: true
