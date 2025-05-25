@@ -67,3 +67,44 @@ red_flags:
   - 販売事業者が未確定
   - 一時的な体制のみで継続性なし
   - 試行的な取組で販売予定なし
+
+criteria:
+  - id: ORG-01
+    name: 運営体制の構築
+    description: 役割分担リストから必須ロール（営業・運営・財務）が揃っているか
+    type: text
+    scoring:
+      logic: |
+        if has_sales and has_operation and has_finance:
+          return 10
+        elif (has_sales and has_operation) or (has_sales and has_finance) or (has_operation and has_finance):
+          return 5
+        else:
+          return 0
+    must_have: true
+
+  - id: ORG-02
+    name: 販売予定先の明示
+    description: OTA/旅行会社名や自社EC等の販路が明記されているか
+    type: text
+    scoring:
+      logic: |
+        if has_ota or has_travel_agency or has_ec:
+          return 10
+        else:
+          return 0
+    must_have: true
+
+  - id: ORG-03
+    name: 協定書・営業協力体制の有無
+    description: 地域事業者・自治体等との協定書や営業協力体制の明示
+    type: text
+    scoring:
+      logic: |
+        if has_agreement and has_collaboration:
+          return 10
+        elif has_agreement or has_collaboration:
+          return 5
+        else:
+          return 0
+    must_have: true

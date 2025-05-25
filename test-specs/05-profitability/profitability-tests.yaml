@@ -111,3 +111,51 @@ red_flags:
   - 補助金依存の収益構造
   - 採算度外視の計画
   - 継続性への配慮不足
+
+# 収益性（Profitability）拡張テスト仕様
+
+criteria:
+  - id: PROF-01
+    name: 自立採算性
+    description: 補助金終了後3年目のPL提出・営業利益率>5%で合格
+    type: numeric
+    scoring:
+      logic: |
+        if has_pl and op_margin >= 0.05:
+          return 10
+        elif has_pl:
+          return 5
+        else:
+          return 0
+    must_have: true
+
+  - id: PROF-02
+    name: 賃金上昇
+    description: 従業員人件費総額の前年比増加率
+    type: numeric
+    threshold:
+      full: 0.03   # +3%以上で満点
+      half: 0.01   # +1%以上で半分
+    scoring:
+      logic: |
+        if wage_growth >= 0.03:
+          return 10
+        elif wage_growth >= 0.01:
+          return 5
+        else:
+          return 0
+    must_have: true
+
+  - id: PROF-03
+    name: 複数収益源の有無
+    description: 物販・サブスク等、複数収益源の明記
+    type: text
+    scoring:
+      logic: |
+        if has_merchandise and has_subscription:
+          return 10
+        elif has_merchandise or has_subscription:
+          return 5
+        else:
+          return 0
+    must_have: true

@@ -65,3 +65,53 @@ red_flags:
   - 地域の特徴が不明確
   - 競合分析が不十分
   - 独自性の説明が抽象的
+
+# 独自性・新規性（Uniqueness/Innovation）拡張テスト仕様
+
+criteria:
+  - id: UNI-01
+    name: 差別化の明確さ
+    description: 他地域・過去事例との類似度スコア（Jaccard距離等）
+    type: numeric
+    threshold:
+      full: 0.3   # 類似度0.3未満で満点
+      half: 0.5   # 0.3以上0.5未満で半分
+    scoring:
+      logic: |
+        if value < 0.3:
+          return 10
+        elif value < 0.5:
+          return 5
+        else:
+          return 0
+    must_have: true
+
+  - id: UNI-02
+    name: 未活用資源の活用・付加価値
+    description: 新規性自己申告（★1-3段階）＋根拠の具体性
+    type: text+numeric
+    scoring:
+      logic: |
+        # ★3＋根拠明確なら10点、★2＋根拠で5点、他は0点
+        if stars == 3 and has_rationale:
+          return 10
+        elif stars == 2 and has_rationale:
+          return 5
+        else:
+          return 0
+    must_have: true
+
+# 相対評価用
+relative:
+  - id: UNI-RANK
+    name: 類似度ランキング
+    description: 全応募中の独自性スコア順位
+    scoring:
+      logic: |
+        # 上位20%なら+2点、下位20%なら-2点
+        if percentile >= 0.8:
+          return 2
+        elif percentile <= 0.2:
+          return -2
+        else:
+          return 0

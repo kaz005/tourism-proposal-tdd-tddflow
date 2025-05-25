@@ -85,3 +85,67 @@ common_mistakes:
   - 経済波及効果を過大に見積もる
   - 一時的な効果のみで持続性を考慮しない
   - エビデンスとなる協定書等の準備不足
+
+# 持続可能性（Sustainability）拡張テスト仕様
+
+criteria:
+  - id: SUST-01
+    name: 域内調達率
+    description: 事業費のうち域内企業への発注割合
+    type: numeric
+    threshold:
+      full: 0.7   # 70%以上で満点
+      half: 0.5   # 50%以上で半分
+    scoring:
+      logic: |
+        if value >= 0.7:
+          return 10
+        elif value >= 0.5:
+          return 5
+        else:
+          return 0
+    must_have: true
+
+  - id: SUST-02
+    name: 地域経済波及効果
+    description: 地元産業への経済波及効果（定量的根拠の有無）
+    type: text+numeric
+    scoring:
+      logic: |
+        # 経済波及効果の金額が明記され、根拠が具体的なら10点
+        if has_amount and has_rationale:
+          return 10
+        elif has_amount:
+          return 5
+        else:
+          return 0
+    must_have: true
+
+  - id: SUST-03
+    name: 地域関係者巻き込み度
+    description: 参画する地域関係者・事業者の数
+    type: numeric
+    scoring:
+      logic: |
+        if value >= 5:
+          return 10
+        elif value >= 3:
+          return 5
+        else:
+          return 0
+    must_have: true
+
+# 相対評価用（例: 他提案との比較順位）
+relative:
+  - id: SUST-RANK
+    name: 域内調達率ランキング
+    description: 全応募中の域内調達率順位
+    scoring:
+      logic: |
+        # 上位20%なら+2点、下位20%なら-2点
+        if percentile >= 0.8:
+          return 2
+        elif percentile <= 0.2:
+          return -2
+        else:
+          return 0
