@@ -1,0 +1,83 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pkl
+*.egg-info/
+.venv/
+venv/
+env/
+ENV/
+.Python
+
+# Jupyter
+.ipynb_checkpoints
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# VSCode/IDE
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.code-workspace
+
+# Web build
+build/
+dist/
+coverage/
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# LLM/AI
+openai_api_key.txt
+.env
+.env.*
+*.env
+*.secret
+
+# Output/Artifacts
+*.pdf
+*.docx
+*.xlsx
+*.pptx
+*.zip
+*.tar.gz
+*.out
+*.result
+*.cache
+
+# Git
+*.orig
+*.rej
+
+# Test/Reports
+htmlcov/
+.tox/
+pytest_cache/
+.coverage
+coverage.xml
+
+# Misc
+*.sqlite3
+*.db
+*.sqlite
+*.log
+
+# Proposals/Generated
+proposals/*/output/
+proposals/*/draft/ 
