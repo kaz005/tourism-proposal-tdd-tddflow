@@ -451,3 +451,33 @@ absolute	閾値クリアで Pass / Fail	要件違反の即時排除
 relative	合格案件間でスコア化	オリジナリティ等、相対評価が必要な軸
 
 仕様詳細は test-specs/README.md を参照。
+
+## 📝 AIベースの観光事業企画書作成フロー（Webアプリ利用）
+
+本プロジェクトでは、AI（LLM）を活用した観光事業企画書の自動生成をWebアプリで実現しています。
+
+### 1. Webアプリの起動
+- 企画書作成用Webアプリを起動してください。
+  - 起動方法例：
+    ```bash
+    # 例: Streamlitの場合
+    streamlit run src/webapp/main.py
+    ```
+  - または、提供されたURLにアクセス
+
+### 2. API設定
+- OpenAI/Claude等のAPIキーやエンドポイントをWeb UI上で設定
+- 必要に応じて.envファイルや環境変数も利用可能
+
+### 3. インプット項目の入力
+- 地域名・資源リスト・ターゲット層など、画面の指示に従って入力
+- ボリュームオプションや自由記述もサポート
+
+### 4. AI生成・保存
+- 「生成」ボタンでAIが企画書を自動生成
+- 生成結果はMarkdown/Word/PDF等でダウンロード・保存可能
+- proposals/配下に保存し、そのままTDD型評価サイクルに投入可能
+
+#### 参考
+- [プロンプト雛形・解説ガイド](templates/prompt-tourism-proposal-generator-guide.md)
+- [AIベースの企画書作成サンプル](proposals/sample_proposal.md)
