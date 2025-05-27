@@ -1,0 +1,151 @@
+test_id: PRECISION-02
+category: 精密度ブースト要件
+subcategory: コンテンツ品質・固有名詞・数値検証
+weight: 25
+type: content_analysis
+
+mandatory_requirements:
+  points: 15
+  criteria:
+    - id: PRECISION-02-1
+      description: "未定"表記の完全排除
+      evidence_required: 全文の"未定"検索結果
+      minimum_standard: "未定"表記が0件
+      check_points:
+        - 固有名詞が"未定"でない
+        - 数値が"未定"でない
+        - 価格が"未定"でない
+        - 期間が"未定"でない
+        - 役割分担が"未定"でない
+        - 仮置きでも具体的な名称・数値が記載されている
+
+    - id: PRECISION-02-2
+      description: 具体的な固有名詞の使用
+      evidence_required: 固有名詞リスト
+      minimum_standard: 各カテゴリで最低3つ以上の具体例
+      check_points:
+        - 地名（市町村名、観光地名など）
+        - 企業名（協力企業、参考事例企業など）
+        - 人名（責任者、専門家など）
+        - 施設名（宿泊施設、体験施設など）
+        - 制度名（補助金名、認証制度名など）
+
+    - id: PRECISION-02-3
+      description: 数値の根拠と計算式明示
+      evidence_required: 数値根拠資料
+      minimum_standard: 全ての数値に出典または計算式
+      check_points:
+        - 売上予測の計算式が明記されている
+        - 来客数の根拠が示されている
+        - 投資額の内訳が詳細である
+        - 経済効果の算出方法が記載されている
+        - 統計データの出典が明記されている
+
+additional_points:
+  max_points: 10
+  point_per_item: 2
+  criteria:
+    - id: PRECISION-02-4
+      description: 図表品質の高度化
+      evidence_required: 図表品質チェック
+      check_points:
+        - 図表に適切なタイトルが付けられている
+        - データソースが明記されている
+        - 視覚的に分かりやすい構成になっている
+        - 本文との整合性が取れている
+
+    - id: PRECISION-02-5
+      description: 統計データ・公的データの活用
+      evidence_required: 引用統計リスト
+      check_points:
+        - 観光庁統計の活用
+        - 自治体統計の活用
+        - 業界統計の活用
+        - 学術研究データの活用
+        - 最新データ（3年以内）の使用
+
+    - id: PRECISION-02-6
+      description: 英語Executive Summaryの品質
+      evidence_required: 英語要約文
+      check_points:
+        - 500語以上の分量
+        - 専門用語の適切な英訳
+        - 文法・表記の正確性
+        - 日本語版との整合性
+
+    - id: PRECISION-02-7
+      description: 役割分担の具体性
+      evidence_required: 組織体制図・役割表
+      check_points:
+        - 担当者名が明記されている
+        - 責任範囲が明確である
+        - 連絡先が記載されている
+        - 経歴・専門性が示されている
+
+    - id: PRECISION-02-8
+      description: 期間・スケジュールの詳細性
+      evidence_required: 詳細スケジュール表
+      check_points:
+        - 月単位以下の詳細スケジュール
+        - マイルストーンの設定
+        - 依存関係の明示
+        - バッファ期間の設定
+
+scoring_method: |
+  1. 必須要件（PRECISION-02-1〜PRECISION-02-3）をすべて満たす → 15点
+  2. 追加要素（PRECISION-02-4〜PRECISION-02-8）各2点、最大10点
+  3. 合計最大25点
+
+validation_script: |
+  def validate_content_quality(proposal_text):
+    results = {}
+    
+    # "未定"チェック
+    pending_count = proposal_text.count("未定")
+    results['pending_terms'] = {
+      'count': pending_count,
+      'required': 0,
+      'passed': pending_count == 0
+    }
+    
+    # 固有名詞チェック
+    proper_nouns = extract_proper_nouns(proposal_text)
+    results['proper_nouns'] = {
+      'places': len(proper_nouns['places']),
+      'companies': len(proper_nouns['companies']),
+      'people': len(proper_nouns['people']),
+      'facilities': len(proper_nouns['facilities']),
+      'systems': len(proper_nouns['systems']),
+      'passed': all(len(v) >= 3 for v in proper_nouns.values())
+    }
+    
+    # 数値根拠チェック
+    numbers_with_sources = count_numbers_with_sources(proposal_text)
+    total_numbers = count_all_numbers(proposal_text)
+    results['numerical_evidence'] = {
+      'with_sources': numbers_with_sources,
+      'total': total_numbers,
+      'ratio': numbers_with_sources / total_numbers if total_numbers > 0 else 0,
+      'passed': numbers_with_sources / total_numbers >= 0.8 if total_numbers > 0 else False
+    }
+    
+    return results
+
+prohibited_terms:
+  - "未定"
+  - "検討中"
+  - "調整中"
+  - "後日決定"
+  - "別途検討"
+  - "詳細は未定"
+
+required_specificity:
+  dates:
+    - "2024年4月〜2025年3月" # 具体的期間
+    - "毎週土日" # 具体的頻度
+  amounts:
+    - "500万円" # 具体的金額
+    - "月額50万円" # 具体的単価
+  people:
+    - "田中太郎（プロジェクトマネージャー）" # 具体的担当者
+    - "観光協会会長 佐藤花子氏" # 具体的役職者

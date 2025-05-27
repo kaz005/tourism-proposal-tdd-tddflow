@@ -1,0 +1,151 @@
+test_id: PRECISION-03
+category: 精密度ブースト要件
+subcategory: フラグ・ディレクティブ検証
+weight: 15
+type: directive_validation
+
+mandatory_requirements:
+  points: 10
+  criteria:
+    - id: PRECISION-03-1
+      description: 精密度ブーストディレクティブの存在
+      evidence_required: プロンプト上部のディレクティブ文
+      minimum_standard: 必須ディレクティブが全て含まれる
+      check_points:
+        - "# ─── 精密度ブースト ───" ヘッダーが存在
+        - "総文字数 18,000 字以上" 指示が存在
+        - "章ごとに【字数下限】を満たすこと" 指示が存在
+        - "各図表の本文中プレビューを **300 字以上** で具体記述" 指示が存在
+        - "固有名詞・数値・価格・期間・役割分担は '未定' 禁止" 指示が存在
+        - "章末に <<Validation Checklist>> を出力" 指示が存在
+
+    - id: PRECISION-03-2
+      description: 必須フラグの設定
+      evidence_required: 生成条件フラグ
+      minimum_standard: 3つの必須フラグがすべて設定されている
+      check_points:
+        - "▼生成条件: detail_level=ultra" が存在
+        - "▼生成条件: cite_public_stats=yes" が存在
+        - "▼生成条件: add_english_exec_summary=yes" が存在
+
+additional_points:
+  max_points: 5
+  point_per_item: 1
+  criteria:
+    - id: PRECISION-03-3
+      description: detail_level=ultraの効果確認
+      evidence_required: 生成コンテンツの詳細度分析
+      check_points:
+        - 図表説明が300字以上で詳細である
+        - 具体例が豊富に含まれている
+        - 専門用語の解説が含まれている
+        - 論理展開が段階的で詳細である
+
+    - id: PRECISION-03-4
+      description: cite_public_stats=yesの効果確認
+      evidence_required: 統計データ引用リスト
+      check_points:
+        - 観光庁統計の引用がある
+        - 自治体統計の引用がある
+        - 公的機関データの引用がある
+        - 引用データの出典が明記されている
+
+    - id: PRECISION-03-5
+      description: add_english_exec_summary=yesの効果確認
+      evidence_required: 英語要約セクション
+      check_points:
+        - English Executive Summaryセクションが存在
+        - 500語以上の英文である
+        - 主要ポイントが英語で要約されている
+        - 専門用語が適切に英訳されている
+
+    - id: PRECISION-03-6
+      description: Validation Checklistの実装確認
+      evidence_required: 各章末のチェックリスト
+      check_points:
+        - 全8章にValidation Checklistが存在
+        - ❶字数❷図表❸審査基準の3要素が含まれる
+        - チェック結果が具体的に記載されている
+
+    - id: PRECISION-03-7
+      description: 図表300字解説の実装確認
+      evidence_required: 図表解説文の文字数
+      check_points:
+        - 全図表に300字以上の解説がある
+        - 解説内容が図表内容と整合している
+        - 解説が本文に適切に統合されている
+
+scoring_method: |
+  1. 必須要件（PRECISION-03-1, PRECISION-03-2）を両方満たす → 10点
+  2. 追加要素（PRECISION-03-3〜PRECISION-03-7）各1点、最大5点
+  3. 合計最大15点
+
+validation_script: |
+  def validate_flags_and_directives(prompt_text, generated_content):
+    results = {}
+    
+    # ディレクティブ存在チェック
+    required_directives = [
+      "# ─── 精密度ブースト ───",
+      "総文字数 18,000 字以上",
+      "章ごとに【字数下限】を満たすこと",
+      "各図表の本文中プレビューを **300 字以上** で具体記述",
+      "固有名詞・数値・価格・期間・役割分担は \"未定\" 禁止",
+      "章末に <<Validation Checklist>> を出力"
+    ]
+    
+    directive_results = {}
+    for directive in required_directives:
+      directive_results[directive] = directive in prompt_text
+    
+    results['directives'] = {
+      'checks': directive_results,
+      'passed': all(directive_results.values())
+    }
+    
+    # フラグ存在チェック
+    required_flags = [
+      "detail_level=ultra",
+      "cite_public_stats=yes", 
+      "add_english_exec_summary=yes"
+    ]
+    
+    flag_results = {}
+    for flag in required_flags:
+      flag_results[flag] = flag in prompt_text
+    
+    results['flags'] = {
+      'checks': flag_results,
+      'passed': all(flag_results.values())
+    }
+    
+    # 生成コンテンツでの効果確認
+    if generated_content:
+      results['effects'] = {
+        'english_summary_exists': "English Executive Summary" in generated_content,
+        'validation_checklists_count': generated_content.count("<<Validation Checklist>>"),
+        'statistical_citations': count_statistical_citations(generated_content),
+        'detailed_explanations': count_detailed_explanations(generated_content)
+      }
+    
+    return results
+
+test_patterns:
+  valid_prompt:
+    contains:
+      - "# ─── 精密度ブースト ───"
+      - "detail_level=ultra"
+      - "cite_public_stats=yes"
+      - "add_english_exec_summary=yes"
+    expected: "PASS"
+    
+  invalid_prompt:
+    missing:
+      - "detail_level=ultra"
+    expected: "FAIL - 必須フラグ不足"
+
+implementation_notes:
+  - プロンプト生成時に必ずヘッダー部分にディレクティブを挿入
+  - フラグの設定はハードコードではなく、設定により制御可能にする
+  - 生成結果の品質チェックは別途自動化スクリプトで実装
+  - ディレクティブの文言は厳密に一致させる必要がある

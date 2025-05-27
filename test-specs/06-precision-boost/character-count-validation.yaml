@@ -1,0 +1,112 @@
+test_id: PRECISION-01
+category: 精密度ブースト要件
+subcategory: 総文字数・章別字数検証
+weight: 20
+type: strict_validation
+
+mandatory_requirements:
+  points: 10
+  criteria:
+    - id: PRECISION-01-1
+      description: 総文字数18,000字以上
+      evidence_required: 提案書全文の文字数カウント
+      minimum_standard: 18000字
+      check_points:
+        - 全章の合計文字数が18,000字以上あるか
+        - 文字数は日本語文字のみでカウント（英数字・記号除く）
+        - 図表タイトル・キャプションも文字数に含む
+        - 空白・改行は文字数に含めない
+
+    - id: PRECISION-01-2
+      description: 各章の字数下限遵守
+      evidence_required: 章別文字数内訳
+      minimum_standard: 全章が字数下限を満たす
+      check_points:
+        - I. エグゼクティブサマリー ≥ 2,500字
+        - II. 観光振興の現状と補助金審査の視点 ≥ 2,000字
+        - III. 独自性と地域貢献を核とした旅行企画 ≥ 3,500字
+        - IV. 自走可能な収益モデル ≥ 3,000字
+        - V. 参考・先行事例との比較分析 ≥ 2,500字
+        - VI. プロジェクト実現ロードマップ & KPI ≥ 2,500字
+        - VII. リスク & ミティゲーション ≥ 2,000字
+        - VIII. 結論 / 審査委員へのクロージングメッセージ ≥ 2,000字
+
+additional_points:
+  max_points: 10
+  point_per_item: 2
+  criteria:
+    - id: PRECISION-01-3
+      description: 各章で字数下限を20%以上上回る
+      evidence_required: 章別文字数詳細
+      check_points:
+        - 各章が最低字数×1.2以上の分量があるか
+        - 内容の充実度と文字数が比例しているか
+
+    - id: PRECISION-01-4
+      description: 図表解説文が各300字以上
+      evidence_required: 図表別解説文字数
+      check_points:
+        - Fig-1 企画全体の価値連鎖図解説 ≥ 300字
+        - Fig-2 体験行程フローチャート解説 ≥ 300字
+        - Fig-3 5年P/Lシミュレーション解説 ≥ 300字
+        - Fig-4 ガントチャート解説 ≥ 300字
+        - Table-1 事例比較表解説 ≥ 300字
+        - Table-2 KPI表解説 ≥ 300字
+        - Table-3 リスクマトリクス表解説 ≥ 300字
+
+    - id: PRECISION-01-5
+      description: Validation Checklistが全章末に存在
+      evidence_required: 各章末のチェックリスト
+      check_points:
+        - 全8章すべてに<<Validation Checklist>>があるか
+        - ❶字数❷図表❸審査基準の3要素が含まれているか
+        - 自己検証結果が具体的に記載されているか
+
+scoring_method: |
+  1. 必須要件（PRECISION-01-1, PRECISION-01-2）を両方満たす → 10点
+  2. 追加要素（PRECISION-01-3〜PRECISION-01-5）各2点、最大10点
+  3. 合計最大20点
+
+validation_script: |
+  def validate_character_count(proposal_text):
+    chapters = extract_chapters(proposal_text)
+    results = {}
+    
+    # 総文字数チェック
+    total_chars = count_japanese_chars(proposal_text)
+    results['total_chars'] = {
+      'count': total_chars,
+      'required': 18000,
+      'passed': total_chars >= 18000
+    }
+    
+    # 章別文字数チェック
+    chapter_requirements = {
+      'I': 2500, 'II': 2000, 'III': 3500, 'IV': 3000,
+      'V': 2500, 'VI': 2500, 'VII': 2000, 'VIII': 2000
+    }
+    
+    for chapter_id, min_chars in chapter_requirements.items():
+      chapter_text = chapters.get(chapter_id, '')
+      char_count = count_japanese_chars(chapter_text)
+      results[f'chapter_{chapter_id}'] = {
+        'count': char_count,
+        'required': min_chars,
+        'passed': char_count >= min_chars
+      }
+    
+    return results
+
+test_data_examples:
+  valid_case:
+    total_chars: 20500
+    chapter_I: 3000
+    chapter_II: 2200
+    chapter_III: 4000
+    expected_result: "PASS"
+    
+  invalid_case:
+    total_chars: 16000
+    chapter_I: 2000
+    chapter_II: 1800
+    expected_result: "FAIL - 総文字数不足"

@@ -34,6 +34,7 @@ export default function HomePage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [result, setResult] = useState<GenerationResult | null>(null);
   const [showSettings, setShowSettings] = useState(false);
+  const [promptText, setPromptText] = useState<string>('');
 
   const handleInputChange = (field: keyof FormData, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -53,6 +54,7 @@ export default function HomePage() {
     setIsGenerating(true);
     try {
       const prompt = generatePrompt(formData);
+      setPromptText(prompt); // Store prompt for validation
       
       const response = await fetch('/api/generate', {
         method: 'POST',
@@ -266,6 +268,7 @@ export default function HomePage() {
           <ResultDisplay 
             result={result}
             loading={isGenerating}
+            promptText={promptText}
           />
         </div>
       </div>
